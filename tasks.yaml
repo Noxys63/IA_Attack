@@ -1,0 +1,25 @@
+tasks:
+  osint:
+    description: >
+      Gather and structure public information on Innovatech Inc. using open sources (social media, GitHub, company websites).
+      Focus on identifying technologies used, key employees, their interests, and possible points of exploitation.
+    expected_output: "Structured OSINT report"
+    context: []
+
+  phishing:
+    description: >
+      Create highly tailored phishing emails using insights from the OSINT report. Messages should be relevant, persuasive, and able to bypass common detection techniques.
+    expected_output: "One phishing emails ready to be sent"
+    context: ["osint"]
+
+  malware:
+    description: >
+      Design a conceptual AI-powered malware payload. This is a theoretical plan only — no executable code. Emphasize polymorphism, behavioral evasion, and adaptive capabilities.
+    expected_output: "Conceptual malware strategy"
+    context: []
+
+  exfiltration:
+    description: >
+      Develop a stealth data exfiltration plan based on the simulated compromise. Use AI-enhanced tactics for stealthy transfer, route adaptation, and payload encryption.
+    expected_output: "Data exfiltration strategy"
+    context: ["malware"]

@@ -1,0 +1,156 @@
+{
+  "name": "CrewAI Simulation (POST FIX)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "start",
+        "responseMode": "onReceived",
+        "responseCode": 200
+      },
+      "id": "1",
+      "name": "Start Simulation (Webhook)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        200,
+        300
+      ],
+      "webhookId": "start-simulation"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/run/phase1",
+        "method": "POST",
+        "responseFormat": "json"
+      },
+      "id": "2",
+      "name": "Run Phase 1 (CrewAI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Phase1_Result",
+              "value": "={{$json.result}}"
+            }
+          ]
+        }
+      },
+      "id": "3",
+      "name": "Afficher R\u00e9sultat Phase 1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "clic-email",
+        "responseMode": "onReceived",
+        "responseCode": 200
+      },
+      "id": "4",
+      "name": "Clic Simul\u00e9 (Webhook)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        200,
+        600
+      ],
+      "webhookId": "click-simule"
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:8000/run/phase2",
+        "method": "POST",
+        "responseFormat": "json"
+      },
+      "id": "5",
+      "name": "Run Phase 2 (CrewAI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        450,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Phase2_Result",
+              "value": "={{$json.result}}"
+            }
+          ]
+        }
+      },
+      "id": "6",
+      "name": "Afficher R\u00e9sultat Phase 2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        700,
+        600
+      ]
+    }
+  ],
+  "connections": {
+    "Start Simulation (Webhook)": {
+      "main": [
+        [
+          {
+            "node": "Run Phase 1 (CrewAI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Phase 1 (CrewAI)": {
+      "main": [
+        [
+          {
+            "node": "Afficher R\u00e9sultat Phase 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clic Simul\u00e9 (Webhook)": {
+      "main": [
+        [
+          {
+            "node": "Run Phase 2 (CrewAI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Phase 2 (CrewAI)": {
+      "main": [
+        [
+          {
+            "node": "Afficher R\u00e9sultat Phase 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false
+}
